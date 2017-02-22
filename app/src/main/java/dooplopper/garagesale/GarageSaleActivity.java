@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
@@ -21,22 +20,21 @@ public class GarageSaleActivity extends AppCompatActivity {
 
     private boolean twoPane;
 
-    ArrayList<Item> items = new ArrayList<Item>();
+    static ArrayList<Item> items = new ArrayList<Item>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garage_sale);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "You pushed the button", Snackbar.LENGTH_SHORT)
+                Intent intent = new Intent(v.getContext(), ItemEditActivity.class);
+                v.getContext().startActivity(intent);
+
+                Snackbar.make(v, "Editing new item!", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null)
                         .show();
 
@@ -53,9 +51,6 @@ public class GarageSaleActivity extends AppCompatActivity {
 
         }
 
-        Item i = new Item("1", "This is a test", "derp");
-        items.add(i);
-
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -63,8 +58,7 @@ public class GarageSaleActivity extends AppCompatActivity {
 
     }
 
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+    public class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final List<Item> values;
 
@@ -83,6 +77,7 @@ public class GarageSaleActivity extends AppCompatActivity {
             holder.item = values.get(position);
             holder.idView.setText(values.get(position).id);
             holder.contentView.setText(values.get(position).content);
+            holder.priceView.setText("$" + String.valueOf(values.get(position).price));
 
             holder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,6 +95,7 @@ public class GarageSaleActivity extends AppCompatActivity {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, ItemDetailActivity.class);
                         intent.putExtra(ItemDetailFragment.ITEM_ID, holder.item.id);
+                        intent.putExtra(ItemDetailFragment.ITEM_PRICE, holder.item.price);
 
                         context.startActivity(intent);
 
@@ -119,6 +115,7 @@ public class GarageSaleActivity extends AppCompatActivity {
             public final View view;
             public final TextView idView;
             public final TextView contentView;
+            public final TextView priceView;
             public Item item;
 
             public ViewHolder(View view) {
@@ -126,6 +123,7 @@ public class GarageSaleActivity extends AppCompatActivity {
                 this.view = view;
                 this.idView = (TextView) view.findViewById(R.id.id);
                 this.contentView = (TextView) view.findViewById(R.id.content);
+                this.priceView = (TextView) view.findViewById(R.id.price);
 
             }
 
@@ -136,6 +134,16 @@ public class GarageSaleActivity extends AppCompatActivity {
             }
 
         }
+
+    }
+
+    public static void publishItem(Item i) {
+        GarageSaleActivity.items.add(i);
+
+    }
+
+    public static int nextId() {
+        return items.size();
 
     }
 
