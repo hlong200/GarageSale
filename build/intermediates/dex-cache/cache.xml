@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Hunter\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-22.2.1_42c9d9c11d306cdde4e06345e2d76da46602a50d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\Android\GarageSale\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-22.2.1_5970d6851551270c1e67fc6f7808154a42a68da8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\Android\GarageSale\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="2ff305832af6e4b2d3773b4f2badbfe951ac3490">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_69c99c9db46e8ffaf6be910df7c7b1dde28b703c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\Android\GarageSale\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="3abb4b88f5a8a0584a9b01d3170d7165f12f8588">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-22.2.1_adf2c060fe70bc17e7da4f06a1166a316aef3399\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\Android\GarageSale\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-22.2.1_950da32e7bf414184418f631a616504e887589c8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\Android\GarageSale\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="5b244f7cfb3de9b1baa7873f2961f6eaeed30db3">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9a0aea2a57f480845cea2bf6193f3a2323fec87a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\Android\GarageSale\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-22.2.1_7bb85dd80b4f5854d09b39605a6abe36d6570327\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Projects\Android\GarageSale\app\build\intermediates\exploded-aar\com.android.support\design\22.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="D:\Projects\Android\GarageSale\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-22.2.1_ab5302981145e1160a0e8ff43de4a172cd9ace2c\classes.dex" />
+    </item>
+
+</items>
