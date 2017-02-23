@@ -1,13 +1,17 @@
 package dooplopper.garagesale;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,16 @@ import java.util.List;
 
 public class GarageSaleActivity extends AppCompatActivity {
 
+    static DBHelper dbHelper;
+    static SQLiteDatabase db;
+    static ContentValues values;
+    Cursor dbCursor;
+
+    String[] projection = {dbHelper._ID, dbHelper.COLUMN_NAME, dbHelper.COLUMN_NAME_PRICE};
+    String selection = dbHelper.COLUMN_NAME + " = ?";
+    String[] selectionArgs = {};
+    String sortOrder = dbHelper.COLUMN_NAME_PRICE + " DESC";
+
     private boolean twoPane;
 
     static ArrayList<Item> items = new ArrayList<Item>();
@@ -26,6 +40,27 @@ public class GarageSaleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_garage_sale);
+
+        // Database stuff
+        dbHelper = new DBHelper(this);
+        db = dbHelper.getWritableDatabase();
+        values = new ContentValues();
+        dbCursor = db.query(dbHelper.TABLE_NAME, projection, selection, null, null, null, null);
+
+        while(dbCursor.moveToNext()) {
+            String name = dbCursor.getString(dbCursor.getColumnIndex("name"));
+            double price = dbCursor.getDouble(dbCursor.getColumnIndex("price"));
+
+            try {
+                Item i = new Item(String.valueOf(nextId()), name, price);
+                items.add(i);
+
+            } catch(Exception e) {
+                Log.e(getPackageName(), "DB Error: " + e.toString());
+
+            }
+
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +87,13 @@ public class GarageSaleActivity extends AppCompatActivity {
         }
 
     }
+
+    /*@Override
+    protected void onDestroy() {
+        dbHelper.close();
+        super.onDestroy();
+
+    }*/
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(items));
@@ -138,6 +180,9 @@ public class GarageSaleActivity extends AppCompatActivity {
     }
 
     public static void publishItem(Item i) {
+        values.put(dbHelper.COLUMN_NAME, i.content);
+        values.put(dbHelper.COLUMN_NAME_PRICE, i.price);
+        long newRowId = db.insert(dbHelper.TABLE_NAME, null, values);
         GarageSaleActivity.items.add(i);
 
     }

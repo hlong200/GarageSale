@@ -8,9 +8,9 @@ public class Item {
 
     public final String id;
     public final String content;
-    public final String price;
+    public final double price;
 
-    public Item(String id, String content, String price) {
+    public Item(String id, String content, double price) {
         this.id = id;
         this.content = content;
         this.price = price;

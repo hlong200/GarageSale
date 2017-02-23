@@ -31,7 +31,7 @@ public class ItemEditActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GarageSaleActivity.publishItem(new Item(String.valueOf(GarageSaleActivity.nextId()), editName.getText().toString(), editPrice.getText().toString()));
+                GarageSaleActivity.publishItem(new Item(String.valueOf(GarageSaleActivity.nextId()), editName.getText().toString(), Double.valueOf(editPrice.getText().toString())));
                 navigateUpTo(getParentActivityIntent());
                 Snackbar.make(v, "Publish", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 
