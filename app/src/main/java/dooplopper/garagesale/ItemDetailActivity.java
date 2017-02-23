@@ -37,9 +37,10 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         }
 
+        // Transfer data to ItemDetailFragment and display it
         if(savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ITEM_ID, getIntent().getStringExtra(ItemDetailFragment.ITEM_ID));
+            arguments.putString(ItemDetailFragment.ITEM_ID, getIntent().getStringExtra(String.valueOf(ItemDetailFragment.ITEM_ID)));
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction().add(R.id.item_detail_container, fragment).commit();
@@ -52,7 +53,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
         if(id == android.R.id.home) {
-            navigateUpTo(new Intent(this, GarageSaleActivity.class));
+            startActivityForResult(getParentActivityIntent(), RESULT_CANCELED);
             return true;
 
         }
