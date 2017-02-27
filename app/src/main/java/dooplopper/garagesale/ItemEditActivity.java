@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 public class ItemEditActivity extends AppCompatActivity {
 
+    // Name and price text fields
     EditText editName;
     EditText editPrice;
 
@@ -24,16 +25,23 @@ public class ItemEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_edit);
 
+        // Instantiate name and price text fields
         editName = (EditText) findViewById(R.id.edit_name);
         editPrice = (EditText) findViewById(R.id.edit_price);
 
+        // Floating Action Button for publishing item
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< HEAD
                 GarageSaleActivity.publishItem(new Item(String.valueOf(GarageSaleActivity.nextId()), editName.getText().toString(), Double.valueOf(editPrice.getText().toString())));
+=======
+                // Instantiate new Item with id, name, and price parameters and publish it
+                GarageSaleActivity.publishItem(new Item(GarageSaleActivity.nextId(), editName.getText().toString(), Double.valueOf(editPrice.getText().toString())));
+                // Return to app home activity
+>>>>>>> origin/master
                 navigateUpTo(getParentActivityIntent());
-                Snackbar.make(v, "Publish", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 
             }
 
