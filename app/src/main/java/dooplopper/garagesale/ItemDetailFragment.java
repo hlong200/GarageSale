@@ -45,6 +45,7 @@ public class ItemDetailFragment extends Fragment {
         // Setup the view items with values from the item
         if(item != null) {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText("$" + String.valueOf(item.price));
+
         }
 
         return rootView;

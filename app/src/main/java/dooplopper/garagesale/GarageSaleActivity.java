@@ -7,13 +7,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.design.widget.FloatingActionButton;
-<<<<<<< HEAD
-import android.support.design.widget.Snackbar;
-=======
->>>>>>> origin/master
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,127 +19,112 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GarageSaleActivity extends AppCompatActivity implements View.OnClickListener{
+import static android.support.design.R.styleable.FloatingActionButton;
+
+public class GarageSaleActivity extends AppCompatActivity {
 
     static DBHelper dbHelper;
     static SQLiteDatabase db;
     static ContentValues values;
     Cursor dbCursor;
 
-    String[] projection = {dbHelper._ID, dbHelper.COLUMN_NAME, dbHelper.COLUMN_NAME_PRICE};
-    String selection = dbHelper.COLUMN_NAME + " = ?";
-    String[] selectionArgs = {};
-    String sortOrder = dbHelper.COLUMN_NAME_PRICE + " DESC";
-
     private boolean twoPane;
     private boolean isLaunched = false;
-    static SQLiteDatabase db;
-    Cursor dbCursor;
 
     int idCol;
     int nameCol;
     int priceCol;
+    int purchasedCol;
 
     static ArrayList<Item> items = new ArrayList<Item>();
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == RESULT_CANCELED) {
-            Log.v(getPackageName(), "Returning to home");
-            isLaunched = true;
-
-        }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init(savedInstanceState);
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private void init(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_garage_sale);
 
-<<<<<<< HEAD
-        // Database stuff
-        dbHelper = new DBHelper(this);
-        db = dbHelper.getWritableDatabase();
-        values = new ContentValues();
-        dbCursor = db.query(dbHelper.TABLE_NAME, projection, selection, null, null, null, null);
+        Log.v(getPackageName(), "Reloading data");
 
-        while(dbCursor.moveToNext()) {
-            String name = dbCursor.getString(dbCursor.getColumnIndex("name"));
-            double price = dbCursor.getDouble(dbCursor.getColumnIndex("price"));
-
-            try {
-                Item i = new Item(String.valueOf(nextId()), name, price);
-                items.add(i);
-
-            } catch(Exception e) {
-                Log.e(getPackageName(), "DB Error: " + e.toString());
-
-            }
-
-        }
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ItemEditActivity.class);
-                v.getContext().startActivity(intent);
-=======
-        if(!isLaunched) {
-            setContentView(R.layout.activity_garage_sale);
-
+        if(savedInstanceState == null) {
             try {
                 db = this.openOrCreateDatabase("garagesale", MODE_PRIVATE, null);
-                db.execSQL("CREATE TABLE IF NOT EXISTS " + "items (id PRIMARY KEY, name VARCHAR, price DOUBLE);");
+                db.execSQL("CREATE TABLE IF NOT EXISTS " + "items (id PRIMARY KEY, name VARCHAR, price DOUBLE, purchased INTEGER);");
                 dbCursor = db.rawQuery("SELECT * FROM items", null);
                 idCol = dbCursor.getColumnIndex("id");
                 nameCol = dbCursor.getColumnIndex("name");
                 priceCol = dbCursor.getColumnIndex("price");
+                purchasedCol = dbCursor.getColumnIndex("purchased");
 
                 while(dbCursor.moveToNext()) {
-                    Item i = new Item(items.size(), dbCursor.getString(nameCol), dbCursor.getDouble(priceCol));
-                    if(items.contains(i)) {
+                    Item i = new Item(items.size(), dbCursor.getString(nameCol), dbCursor.getDouble(priceCol), (dbCursor.getInt(purchasedCol) == 1));
+                    if(items.contains(i) || i.purchased) {
                         Log.v(getPackageName(), "Already contains " + i.content);
 
                     } else {
                         items.add(i);
 
                     }
->>>>>>> origin/master
-
-                }
-
-                for(Item i : items) {
-                    Log.v(getPackageName(), i.content);
 
                 }
 
             } catch(Exception e) {
                 Log.e(getPackageName(), e.getStackTrace().toString());
+                items.clear();
 
-            }
+                while(dbCursor.moveToNext()) {
+                    Item i = new Item(items.size(), dbCursor.getString(nameCol), dbCursor.getDouble(priceCol), (dbCursor.getInt(purchasedCol) == 1));
+                    if(items.contains(i) || i.purchased) {
+                        Log.v(getPackageName(), "Already contains " + i.content);
 
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), ItemEditActivity.class);
-                    v.getContext().startActivity(intent);
+                    } else {
+                        items.add(i);
+
+                    }
 
                 }
 
-            });
+            }
 
-            View recyclerView = findViewById(R.id.item_list);
-            assert recyclerView != null;
-            setupRecyclerView((RecyclerView) recyclerView);
+            values = new ContentValues();
 
-            if(findViewById(R.id.item_detail_container) != null) {
-                twoPane = true;
+        } else {
+            values.put("purchased", 1);
+            db.update("items", values, "id = " + String.valueOf(getIntent().getIntExtra("purchased", 0)), null);
+
+        }
+
+        Log.v(getPackageName(), String.valueOf(items.size()));
+
+        android.support.design.widget.FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ItemEditActivity.class);
+                v.getContext().startActivity(intent);
 
             }
 
+        });
+
+        View recyclerView = findViewById(R.id.item_list);
+        assert recyclerView != null;
+        setupRecyclerView((RecyclerView) recyclerView);
+
+        if(findViewById(R.id.item_detail_container) != null) {
+            twoPane = true;
+
         }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outSave) {
+        outSave.putBoolean("isLaunched", true);
 
     }
 
@@ -238,16 +219,9 @@ public class GarageSaleActivity extends AppCompatActivity implements View.OnClic
     }
 
     public static void publishItem(Item i) {
-<<<<<<< HEAD
-        values.put(dbHelper.COLUMN_NAME, i.content);
-        values.put(dbHelper.COLUMN_NAME_PRICE, i.price);
-        long newRowId = db.insert(dbHelper.TABLE_NAME, null, values);
-        GarageSaleActivity.items.add(i);
-=======
         db.execSQL("INSERT INTO items (name, price) VALUES ('" + i.content + "', " + i.price + ");");
-        Log.v("potato", "Inserted more data");
-        //GarageSaleActivity.items.add(i);
->>>>>>> origin/master
+        Log.v("potato", "Inserted item: " + i.content);
+        GarageSaleActivity.items.add(i);
 
     }
 
