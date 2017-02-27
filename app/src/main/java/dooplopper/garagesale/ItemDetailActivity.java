@@ -8,6 +8,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -58,6 +59,7 @@ public class ItemDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.delete_fab) {
+            Log.v(getPackageName(), "Marking item " + String.valueOf(fragment.getArguments().getInt(ItemDetailFragment.ITEM_ID)) + " as purchased");
             getParentActivityIntent().putExtra("purchased", fragment.getArguments().getInt(ItemDetailFragment.ITEM_ID));
             NavUtils.navigateUpFromSameTask(this);
 

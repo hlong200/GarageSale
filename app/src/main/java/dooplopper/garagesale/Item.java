@@ -9,7 +9,7 @@ public class Item {
     public final int id;
     public final String content;
     public final double price;
-    public final boolean purchased;
+    public boolean purchased;
 
     public Item(int id, String content, double price, boolean purchased) {
         this.id = id;
